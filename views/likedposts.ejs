@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Posts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-20">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-around items-center h-16">
+                <h1 class="text-2xl font-bold mr-auto text-blue-600">shareframe</h1>
+                <div class="flex items-center gap-4">
+                    <a href="/posts/addpost" title="Add Post" class="text-slate-600 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </a>
+
+                    <a href="/user/myposts" title="My Posts" class="text-slate-600 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 00-2 2v2m14 0h-2m-2 0h-2" />
+                        </svg>
+                    </a>
+                    <a href="/user/likedposts" title="Liked Posts" class="text-slate-600 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
+                        </svg>
+                    </a>
+                    
+                    <a href="/user/savedposts" title="Saved Posts" class="text-slate-600 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                    </a>
+                    
+                    <a href="/user/logout" title="Logout" class="text-slate-600 hover:text-red-500">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    </a>
+                    <a href="/user/myprofile" title="My Profile">
+                        <img src="/images/uploads/<%= user.profilepic %>" alt="My Profile" class="w-10 h-10 rounded-full object-cover border-2 border-transparent hover:border-blue-500 transition-all"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="pt-16">
+    <% if(posts && posts.length > 0) { %>
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">   
+            <div class="mt-12">
+                <a href="/posts/homepage" class="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors inline-flex pb-5 items-center gap-2">
+                    <svg xmlns="http://www.w.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Go Back
+                </a>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <% posts.slice().reverse().forEach(function(post) { %>
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            
+                            <a href="/posts/viewpost/<%= post._id %>" class="block">
+                                <div class="w-full h-56 bg-gray-100 flex items-center justify-center">
+                                    <% if(post.image && post.image !== 'default.jpg') { %>
+                                        <img src="/images/uploads/<%= post.image %>" alt="Post media" class="w-full h-full object-cover" />
+                                    <% } else { %>
+                                        <div class="flex flex-col items-center justify-center p-8 text-gray-500 h-96">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" /></svg>
+                                            <span>No Image</span>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </a>
+
+                            <div class="p-4 flex flex-col flex-grow">
+                                <a href="/posts/viewpost/<%= post._id %>" class="flex-grow">
+                                    <p class="font-semibold text-gray-800 mb-4 break-words leading-relaxed truncate"><%= post.title %></p>
+                                </a>
+                                
+                                <div class="border-t border-gray-100 my-2"></div>
+
+                                <div class="flex justify-between items-center text-gray-500 text-sm">
+                                    <% const isLiked = post.likes.map(id => id.toString()).includes(user._id.toString()); %>
+                                    <a href="/posts/like/<%= post._id %>" class="flex items-center gap-2 p-2 rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors duration-200 <%= isLiked ? 'text-red-500' : '' %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span><%= post.likes.length %></span>
+                                    </a>
+
+                                    <a href="/posts/viewpost/<%= post._id %>#comments" class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.839 8.839 0 01-4.083-.98L2.046 17.58a1 1 0 01-1.265-1.265l1.56-3.901A8.962 8.962 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.416 14.584A6.962 6.962 0 0010 16c3.309 0 6-2.691 6-6s-2.691-6-6-6-6 2.691-6 6c0 1.282.41 2.478 1.116 3.444l-1.12 2.8a.5.5 0 00.632.632l2.8-1.12z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span><%= post.comments ? post.comments.length : 0 %></span>
+                                    </a>
+
+                                    <div class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
+                                        <% const isSaved = post.saved.indexOf(user._id.toString()) === -1 ? 0 : 1; %>
+                    <a href="/posts/saved/<%= post._id %>" title="Saved Posts" class="flex items-center gap-2 text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-colors <%= isSaved ? 'text-blue-500' : 'hover:text-blue-500' %>" viewBox="0 0 24 24" fill="<%= isSaved ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+            </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="text-center bg-white p-12 rounded-xl shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-700 mb-2">No Posts to Show</h2>
+                <p class="text-slate-500">When you follow people, their posts will appear here.</p>
+                <a href="/posts/addpost" class="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Create the First Post</a>
+            </div>
+        <% } %>
+</main>
+
+    <script src="script.js"></script>
+</body>
+</html>

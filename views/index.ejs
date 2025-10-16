@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shareframe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 flex flex-col items-center justify-center min-h-screen p-4 font-sans">
+
+    <% if(typeof message !== 'undefined' && message.length > 0) { %>
+    <div id="toast" class="fixed bottom-5 right-5 flex items-center w-full max-w-xs p-4 space-x-4 text-white bg-blue-500 rounded-lg shadow-lg opacity-0 transform translate-y-full duration-500" role="alert">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div class="font-medium"><%= message %></div>
+    </div>
+    <% } %>
+
+    <div class="text-center mb-6">
+        <h1 class="text-4xl font-bold text-blue-600">shareframe</h1>
+        <p class="text-slate-500">Connect and share with your network</p>
+    </div>
+
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+
+        <div class="flex mb-8 border-b border-slate-200">
+            <button id="show-login" class="flex-1 py-3 text-lg font-medium text-center text-blue-600 border-b-2 border-blue-600 focus:outline-none transition-colors duration-300">
+                Login
+            </button>
+            <button id="show-signup" class="flex-1 py-3 text-lg font-medium text-center text-slate-500 hover:text-blue-600 border-b-2 border-transparent focus:outline-none transition-colors duration-300">
+                Sign Up
+            </button>
+        </div>
+
+        <form id="login-form" class="space-y-6" action="/user/login" method="post">
+            <h2 class="text-3xl font-bold text-slate-800 text-center">Welcome Back!</h2>
+            <div>
+                <label for="login-email" class="block text-sm font-medium text-slate-700">Email Address</label>
+                <input type="email" id="login-email" name="email" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="you@example.com">
+            </div>
+            <div>
+                <label for="login-password" class="block text-sm font-medium text-slate-700">Password</label>
+                <input type="password" id="login-password" name="password" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                Log In
+            </button>
+        </form>
+
+        <form id="signup-form" class="space-y-6 hidden" action="/user/register" method="post">
+            <h2 class="text-3xl font-bold text-slate-800 text-center">Create an Account</h2>
+            <div>
+                <label for="signup-name" class="block text-sm font-medium text-slate-700">Full Name</label>
+                <input type="text" id="signup-name" name="fullname" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your full name">
+            </div>
+             <div>
+                <label for="signup-username" class="block text-sm font-medium text-slate-700">Username</label>
+                <input type="text" id="signup-username" name="username" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="@username">
+            </div>
+            <div>
+                <label for="signup-email" class="block text-sm font-medium text-slate-700">Email Address</label>
+                <input type="email" id="signup-email" name="email" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="you@example.com">
+            </div>
+            <div>
+                <label for="signup-password" class="block text-sm font-medium text-slate-700">Password</label>
+                <input type="password" id="signup-password" name="password" required class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Create a strong password">
+            </div>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                Sign Up
+            </button>
+        </form>
+    </div>
+
+    <script>
+       const toast = document.getElementById('toast');
+if (toast) {
+    setTimeout(() => {
+        toast.classList.remove('opacity-0', 'translate-y-full');
+        toast.classList.add('opacity-100', 'translate-y-0');
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-full');
+        setTimeout(() => toast.remove(), 1000);
+    }, 4000);
+}
+
+        // --- Your Original Tab-Switching Logic (Adapted for new classes) ---
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const showLoginBtn = document.getElementById('show-login');
+        const showSignupBtn = document.getElementById('show-signup');
+        
+        // Updated class strings to match the new blue design
+        const activeClass = ['text-blue-600', 'border-b-2', 'border-blue-600'];
+        const inactiveClass = ['text-slate-500', 'hover:text-blue-600', 'border-transparent'];
+
+        function showLoginForm() {
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            
+            showLoginBtn.classList.remove(...inactiveClass);
+            showLoginBtn.classList.add(...activeClass);
+            showSignupBtn.classList.remove(...activeClass);
+            showSignupBtn.classList.add(...inactiveClass);
+        }
+
+        function showSignupForm() {
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            
+            showLoginBtn.classList.remove(...activeClass);
+            showLoginBtn.classList.add(...inactiveClass);
+            showSignupBtn.classList.add(...activeClass);
+            showSignupBtn.classList.remove(...inactiveClass);
+        }
+
+        showLoginBtn.addEventListener('click', showLoginForm);
+        showSignupBtn.addEventListener('click', showSignupForm);
+    </script>
+
+</body>
+</html>
