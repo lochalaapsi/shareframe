@@ -8,35 +8,26 @@ const userSchema = mongoose.Schema({
   },
   username: String,
   email: String,
-  password:{
+  password: {
     type: String,
     trim: true,
   },
   gender: String,
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   bio: {
     type: String,
-    default: ""
+    default: "",
   },
   profilepic: {
     type: String,
-    default: "male-placeholder.png"
+    default: "male-placeholder.png",
   },
-  likedposts: [
-    { type: mongoose.Schema.Types.ObjectId,
-      ref: "post" }
-  ],
-  savedposts: [
-    { type: mongoose.Schema.Types.ObjectId,
-      ref: "post" }
-  ],
-  posts: [
-    { type: mongoose.Schema.Types.ObjectId,
-      ref: "post" }
-  ]
+  likedposts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
+  savedposts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
 });
 
 module.exports = mongoose.model("user", userSchema);

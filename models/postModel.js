@@ -20,19 +20,15 @@ const postSchema = mongoose.Schema({
   userprofilepic: String,
   likes: [
     {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  }
-],
-comments: {
-  type: Array,
-  default: []
-},
-saved: [
-  { type: mongoose.Schema.Types.ObjectId,
-      ref: "user" 
-    }
-  ]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
+  comments: {
+    type: Array,
+    default: [],
+  },
+  saved: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
 });
 
 module.exports = mongoose.model("post", postSchema);
